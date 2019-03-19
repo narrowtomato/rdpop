@@ -1,21 +1,46 @@
 import pyautogui
+import os
 import time
 
-pyautogui.PAUSE = 0.3
+#set pyautogui to pause after every function call (otherwise it is too fast for RDP)
+pyautogui.PAUSE = 0.4
 
-#read a list of server FQDNs from a text file
-serverFQDNs = open('servers.txt')
+choice = ''
 
-#transfer control to Microsoft Remote Desktop
+print('\n\n-----*****WELCOME TO RDPOP*****-----\n')
 
-pyautogui.hotkey('command', 'space')
-pyautogui.typewrite("Microsoft Remote Desktop")
-pyautogui.press('return')
-time.sleep(1)
+while True:
+    #display menu
+    print("1. Run RDPOP")
+    print("2. Edit servers.txt")
+    print("3. Exit\n")
 
-#loop through server FQDNs in the txt file and create RDP records for each
+    choice = input("Enter Selection: ")
 
-for server in serverFQDNs:
-    pyautogui.hotkey('command', 'n')
-    pyautogui.typewrite(server)
-    pyautogui.press('return')
+    if choice == '1':
+        #read a list of server FQDNs from a text file
+        serverFQDNs = open('servers.txt')
+
+        #transfer control to Microsoft Remote Desktop
+
+        pyautogui.hotkey('command', 'space')
+        pyautogui.typewrite("Microsoft Remote Desktop")
+        pyautogui.press('return')
+        time.sleep(1)
+
+        #loop through server FQDNs in the txt file and create RDP records for each
+
+        for server in serverFQDNs:
+            pyautogui.hotkey('command', 'n')
+            pyautogui.typewrite(server)
+            pyautogui.press('return')
+
+    elif choice == '2':
+        #open servers.txt for editing
+        os.system("vim servers.txt")
+
+    elif choice == '3':
+        exit()
+
+    else:
+        print("Invalid Input")
